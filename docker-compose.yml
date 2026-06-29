@@ -1,0 +1,26 @@
+# Yerelde HorizonDB davranışını simüle etmek ve vektör desteği sağlamak için 
+# "pgvector" içeren bir PostreSQL imajı kullanıyoruz. 
+
+# version: '3.8'
+# Determines the schema of Docker Compose file version. 
+# 3.8 is the version that provides modern and deterministic features of Docker motor,
+# and network and volume management models.
+
+services: # all independent services below. 
+# This project contains only 1 (postgres) service. 
+ postgres: # Service name. Up to me
+  image: ankane/pgvector:latest #The reason of using ankane/pgvector instead of postgres is to simulate HorizonDB AI/vector skills in local.
+  container_name: baas-postgres 
+  ports:
+   - "5432:5432" # locahostpost:containerpost
+  environment: # To identify environemtn variables
+   POSTGRES_USER: baas_admin
+   POSTGRES_PASSWORD: super_secret_password
+   POSTGRES_DB: agentic_db
+
+# Data persistence
+  volumes: 
+   - pgdata:/var/lib/postgresql/data
+
+volumes:
+ pgdata:
